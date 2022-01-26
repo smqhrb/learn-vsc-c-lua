@@ -3,36 +3,59 @@
 #include <iostream>
 #include <string.h>
 using namespace std;
-extern "C"
-{
-#include "lua.h"
-#include "lauxlib.h"
-#include "lualib.h"
-}
+#include "lua.hpp"
+//#pragma comment(lib, "lua5.1.lib")
 int main(void)
 {
     aa onetime;
     onetime.sayhello();
     //1 create a new state
-    lua_state *L = luaL_newstate();
+    lua_State *L = luaL_newstate();
     if (L == NULL)
     {
-        return;
+        return 0;
     }
-    //2 push to stack
-    lua_pushstring(L, "I am so cool~");
-    lua_pushnumber(L, 20)
-
-        //3 get
-        if (lua_isstring(L, 1))
+    //2 load lua file
+    int bRet = luaL_loadfile(L, "hello.lua");
+    if (bRet)
     {
-        cout << lua_tostring(L, 1) << endl;
+        cout << "load file error" << endl;
+        return 0;
     }
-    if (lua_isnumber(L, 2))
+    //3 run lua file
+    bRet = lua_pcall(L, 0, 0, 0);
+    if (bRet)
     {
-        cout << lua_tonumber(L, 2) << endl;
+        cout << "pcall error" << endl;
+        return 0;
     }
-    //4 close state
+    //4 read variable
+    lua_getglobal(L, "str");
+    string str = lua_tostring(L, -1);
+    cout << "str=" << str.c_str() << endl;
+    //5 read table
+    lua_getglobal(L, "tbl");
+    lua_getfield(L, -1, "name");
+    str = lua_tostring(L, -1);
+    cout << "tbl:name=" << str.c_str() << endl;
+    //6 read function
+    lua_getglobal(L, "add");
+    lua_pushnumber(L, 10);
+    lua_pushnumber(L, 20);
+    int iRet = lua_pcall(L, 2, 1, 0);
+    if (iRet)
+    {
+        const char *pErrorMsg = lua_tostring(L, -1);
+        cout << pErrorMsg << endl;
+        lua_close(L);
+        return 0;
+    }
+    if (lua_isnumber(L, -1))
+    {
+        double fValue = lua_tonumber(L, -1);
+        cout << "Result is" << fValue << endl;
+    }
+    // close state
     lua_close(L);
 
     return 0;

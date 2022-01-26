@@ -5,12 +5,17 @@
             "label": "task g++",
             "command": "C:\\WorkArea\\WinGW\\mingw64\\bin\\g++.exe",
             "args": [
+                "-Wextra",
+                "-Wall",
                 "-g",
                 "${workspaceFolder}\\*.cpp",
                 "-IC:\\git\\boost_1_75_0\\boost_1_75_0\\",
+                "-I./include",
+                "-LC:\\git\\cppLua",
+                "-llua5.1",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
-                ],
+            ],
             "options": {
                 "cwd": "${fileDirname}"
             },
