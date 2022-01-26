@@ -1,0 +1,10 @@
+{
+    "C_Cpp.updateChannel": "Insiders",
+    "cmake.configureOnOpen": true,
+    "explorer.confirmDelete": false,
+    "cmake.cmakePath": "C:\\Program Files\\CMake\bin\\cmake.exe",
+    "editor.detectIndentation": false,
+    "editor.tabSize": 4,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+}
