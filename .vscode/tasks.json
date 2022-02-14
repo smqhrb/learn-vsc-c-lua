@@ -10,9 +10,9 @@
                 "-g",
                 "${workspaceFolder}\\*.cpp",
                 "-IC:\\git\\boost_1_75_0\\boost_1_75_0\\",
-                "-I./include",
+                "-IC:\\git\\cppLua\\include\\",
                 "-LC:\\git\\cppLua",
-                "-llua5.1",
+                "-llua524",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],

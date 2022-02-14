@@ -4,41 +4,41 @@
 #include <string.h>
 using namespace std;
 #include "lua.hpp"
-//#pragma comment(lib, "lua5.1.lib")
+
 int main(void)
 {
     aa onetime;
     onetime.sayhello();
-    //1 create a new state
+    // 1 create a new state
     lua_State *L = luaL_newstate();
     if (L == NULL)
     {
         return 0;
     }
-    //2 load lua file
+    // 2 load lua file
     int bRet = luaL_loadfile(L, "hello.lua");
     if (bRet)
     {
         cout << "load file error" << endl;
         return 0;
     }
-    //3 run lua file
+    // 3 run lua file
     bRet = lua_pcall(L, 0, 0, 0);
     if (bRet)
     {
         cout << "pcall error" << endl;
         return 0;
     }
-    //4 read variable
+    // 4 read variable
     lua_getglobal(L, "str");
     string str = lua_tostring(L, -1);
     cout << "str=" << str.c_str() << endl;
-    //5 read table
+    // 5 read table
     lua_getglobal(L, "tbl");
     lua_getfield(L, -1, "name");
     str = lua_tostring(L, -1);
     cout << "tbl:name=" << str.c_str() << endl;
-    //6 read function
+    // 6 read function
     lua_getglobal(L, "add");
     lua_pushnumber(L, 10);
     lua_pushnumber(L, 20);
@@ -53,7 +53,7 @@ int main(void)
     if (lua_isnumber(L, -1))
     {
         double fValue = lua_tonumber(L, -1);
-        cout << "Result is" << fValue << endl;
+        cout << "Result is " << fValue << endl;
     }
     // close state
     lua_close(L);
